@@ -43,8 +43,8 @@ def filter2d(img, w, t0):
 
 # method 4 - 2d median filter
 def medianFilter2d(img, n):
-    imgPad = np.pad(img, n//2, 'constant', constant_values = 0)
-    imgFinal = np.zeros(img.shape, dtype=np.double)
+    imgPad = np.pad(img, n//2, 'constant', constant_values = 0) # padding input image to apply filter
+    imgFinal = np.zeros(img.shape, dtype=np.double) # creating new array and applying filter
     for i in range(0, img.shape[0]):
         for j in range(0, img.shape[1]):
             imgFinal[i][j] = np.median(imgPad[i:i+n, j:j+n])
@@ -68,6 +68,7 @@ if __name__ == '__main__':
     filename = str(input()).strip()
     sourceImg = imageio.imread(filename)
     method = int(input())
+    # executing processing based on value of "method" variable
     if method == 1:
         t0 = np.double(input())
         outputImg = normalize(limiarization(sourceImg, t0), 255).astype(np.uint8)
@@ -89,4 +90,5 @@ if __name__ == '__main__':
         outputImg = normalize(medianFilter2d(sourceImg, n), 255).astype(np.uint8)
     else:
         raise ValueError("method value not in supported range (minimum = 1, maximum = 4).")
+    # printing output
     print('%.4f' % rmse(sourceImg, outputImg))
